@@ -5,6 +5,7 @@ from datetime import datetime, date
 import uvicorn
 from dataclasses_json import dataclass_json, LetterCase
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
 from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -117,38 +118,35 @@ def editar_curso(id: int, form: CursoEditar):
 
 
 ## AREA ALUNOS
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
-class Aluno:
+
+class Aluno(BaseModel):
     id: int = field()
     nome: str = field()
     sobrenome: str = field()
     cpf: str = field()
-    data_nascimento: date = field()
+    data_nascimento: datetime = Field(alias="dataNascimento")
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
-class AlunoCadastro:
+
+class AlunoCadastro(BaseModel):
     nome: str = field()
     sobrenome: str = field()
     cpf: str = field()
-    data_nascimento: date = field()
+    data_nascimento: datetime = Field(alias="dataNascimento")
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
-class AlunoEditar:
+
+class AlunoEditar(BaseModel):
     nome: str = field()
     sobrenome: str = field()
     cpf: str = field()
-    data_nascimento: date = field()
+    data_nascimento: datetime = Field(alias="dataNascimento")
 
 alunos = [
     # instanciando um objeto da classe Curso
-    Aluno( id = 1, nome = "Rhamon", sobrenome= "Almeida", cpf="161.074.517-57", data_nascimento = date(1996,4,23)),
-    Aluno(id=2, nome="Larissa", sobrenome="Menezes", cpf="432.781.229-30", data_nascimento = date(1999,10,18)),
-    Aluno(id=3, nome="Carlos", sobrenome="Souza", cpf="205.467.880-92", data_nascimento = date(2006,4,12)),
+    Aluno( id = 1, nome = "Rhamon", sobrenome= "Almeida", cpf="161.074.517-57", dataNascimento = date(1996,4,23)),
+    Aluno(id=2, nome="Larissa", sobrenome="Menezes", cpf="432.781.229-30", dataNascimento = date(1999,10,18)),
+    Aluno(id=3, nome="Carlos", sobrenome="Souza", cpf="205.467.880-92", dataNascimento = date(2006,4,12)),
 ]
 
 @app.get("/api/alunos")
