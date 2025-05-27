@@ -6,9 +6,10 @@ authors = [
     {name = "Rhamon Silva Almeida",email = "rhamonalmeida.dev@hotmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<4.0"
 dependencies = [
-    "fastapi[standard] (>=0.115.12,<0.116.0)"
+    "fastapi[standard] (>=0.115.12,<0.116.0)",
+    "dataclasses-json (>=0.6.7,<0.7.0)"
 ]
 
 [tool.poetry]
