@@ -1,6 +1,9 @@
+from fastapi.params import Depends
+
 from src.escola_api.schemas.curso_schemas import Curso , CursoEditar, CursoCadastro
 from fastapi import HTTPException
 from src.escola_api.app import router
+from src.escola_api.database.banco_dados import SessionLocal
 
 
 cursos = [
@@ -9,10 +12,17 @@ cursos = [
     Curso(id=2, nome="Git e GitHub", sigla="GT")
 ]
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+          db.close()
+
 
 # localhost:8000/docs
 @router.get("/api/cursos")
-def listar_todos_cursos():
+def listar_todos_cursos(db: Session = Depends(get_db)):
     return cursos
 
 
