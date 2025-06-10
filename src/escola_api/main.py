@@ -1,11 +1,10 @@
 import uvicorn
 
-from escola_api.api.v1 import matricula_controller
-from escola_api.database.banco_dados import popular_banco_dados
+from src.escola_api.api.v1 import matricula_controller
 from src.escola_api.api.v1 import aluno_controller
-from src.escola_api.database.banco_dados import engine, Base
 from src.escola_api.api.v1 import curso_controller
 from src.escola_api.app import app
+from src.escola_api.database.banco_dados import engine, Base, popular_banco_dados
 
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)

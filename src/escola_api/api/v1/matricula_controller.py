@@ -4,10 +4,10 @@ from http.client import HTTPException
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 
-from escola_api.database.modelos import MatriculaEntidade
-from escola_api.dependencias import get_db
-from escola_api.schemas.matricula_schemas import MatriculaCadastro, MatriculaEditar
 from src.escola_api.app import router
+from src.escola_api.database.modelos import MatriculaEntidade
+from src.escola_api.dependencias import get_db
+from src.escola_api.schemas.matricula_schemas import MatriculaCadastro, MatriculaEditar
 
 
 @router.get("/api/matriculas", status_code=200, tags=["matriculas"])
@@ -38,6 +38,7 @@ def apagar_matricula(id: int, db: Session = Depends(get_db)):
         return
     raise HTTPException(status_code=404, detail=f"Matricula não encontrada com id {id}")
 
+
 @router.put("/api/matriculas/{id}", status_code=204, tags=["matriculas"])
 def editar_matricula(id: int, form: MatriculaEditar, db: Session = Depends(get_db)):
     matricula = db.query(MatriculaEntidade).get(id)
@@ -48,6 +49,7 @@ def editar_matricula(id: int, form: MatriculaEditar, db: Session = Depends(get_d
         db.refresh()
         return
     raise HTTPException(status_code=404, detail=f"Matricula não encontrada com id {id}")
+
 
 @router.get("/api/matriculas/{id}", status_code=200, tags=["matriculas"])
 def obter_por_id_matricula(id: int, db: Session = Depends(get_db)):

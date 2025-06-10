@@ -38,6 +38,7 @@ def popular_banco_dados():
 
     with engine.connect() as conn:
         for sql_command in sql_commands:
+            sql_command = sql_command.replace("\n", "")
             if not sql_command:
                 continue
             conn.execute(text(sql_command + ";"))
