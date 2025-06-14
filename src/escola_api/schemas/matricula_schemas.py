@@ -3,14 +3,26 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 
+
+
 class MatriculaBase(BaseModel):
-    aluno_id: int = Field()
-    curso_id: int = Field()
+    aluno_id: int = Field(alias="alunoId")
+    curso_id: int = Field(alias="cursoId")
 
 
 # listagem, obter por id (get)
+class MatriculaAluno(BaseModel):
+    nome: str = Field()
+    sobrenome: str = Field()
+    id: int = Field()
+
 class Matricula(MatriculaBase):
     data_matricula: date = Field(alias="dataMatricula")
+    aluno: MatriculaAluno = Field()
+    id: int = Field()
+
+    class Config:
+        populate_by_name = True
 
 
 # cadastro (post)

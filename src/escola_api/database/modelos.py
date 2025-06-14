@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from src.escola_api.database.banco_dados import Base
 
 
+
 class CursoEntidade(Base):
     __tablename__ = "cursos"
 
